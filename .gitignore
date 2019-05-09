@@ -1,0 +1,8 @@
+.vs/
+Library/
+obj/
+Temp/
+
+*.meta
+.DS_Store
+
