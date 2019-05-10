@@ -6,7 +6,7 @@ using UnityEngine.XR.iOS;
 public class TracingLine : MonoBehaviour
 {
     //场景控制组件
-    ScenceManager sm;
+    Angle_ScenceManager sm;
     //父级虚线组件
     LineRenderer p_lr;
     TextMesh r_Text;
@@ -16,7 +16,7 @@ public class TracingLine : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        sm = FindObjectOfType<ScenceManager>();
+        sm = FindObjectOfType<Angle_ScenceManager>();
         p_lr = GetComponentInParent<LineRenderer>();
         r_Text = GetComponentInChildren<TextMesh>();
         transform.position = (p_lr.GetPosition(0) + p_lr.GetPosition(1)) / 2;

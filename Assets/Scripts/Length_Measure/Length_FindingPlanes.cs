@@ -2,18 +2,10 @@
 using UnityEngine;
 using UnityEngine.XR.iOS;
 
-public enum FocusState
-{
-    Initializing,
-    Finding,
-    Found
-}
-
-public class FindingPlanes : MonoBehaviour
-{
+public class Length_FindingPlanes : MonoBehaviour{
     public GameObject centerDot;
     public GameObject foundSquare;
-    public ScenceManager sm;
+    public Length_ScenceManager sm;
     public float maxRayDistance = 30.0f;
     public LayerMask collisionLayer = 1 << 10;
     [HideInInspector]

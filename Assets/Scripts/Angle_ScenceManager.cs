@@ -4,21 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.iOS;
 
-public enum MeasureStatus {
-    Initializing,
-    Adding,
-    Measuring,
-    NeedLight,
-    Complete
-}
-
-public class ScenceManager : MonoBehaviour {
+public class Angle_ScenceManager : MonoBehaviour {
 
     public GameObject hintP;
     public GameObject linesGenerator;
+    public GameObject dotsGenerator;
     public Text hintText;
     public Animator hintTextAniController;
-    public CenterDot cd;
+    public Angle_CenterDot cd;
     public Button btn_Reset;
     public Button btn_Clear;
     [HideInInspector]

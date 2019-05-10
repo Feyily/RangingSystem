@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 267663809}
   - component: {fileID: 267663812}
   - component: {fileID: 267663811}
-  - component: {fileID: 267663813}
+  - component: {fileID: 267663810}
   m_Layer: 5
   m_Name: CenterDot
   m_TagString: Untagged
@@ -498,6 +498,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000012398, y: 0.000012159}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &267663810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 267663808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a03211613d3f416ca77b453425f3f2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fp: {fileID: 1997520651}
+  pointPrefeb: {fileID: 1989281111113808, guid: b87b5090e7da54cf28091334b16a8e78,
+    type: 2}
+  linesGenerator: {fileID: 11883393}
+  dotsGenerator: {fileID: 2031635913}
+  prelRender: {fileID: 120510019555225352, guid: c5ca6336f31274998a93db1b69c9eea0,
+    type: 2}
+  sm: {fileID: 361470552}
+  m_Line: {fileID: 2100000, guid: f45317d0ee2b646a3a8179fe542ec22d, type: 2}
+  distances: []
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!114 &267663811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,28 +554,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 267663808}
---- !u!114 &267663813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 267663808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985ee3b0866ea4a6eb7c1140e56698dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fp: {fileID: 1997520653}
-  pointPrefeb: {fileID: 1989281111113808, guid: b87b5090e7da54cf28091334b16a8e78,
-    type: 2}
-  linesGenerator: {fileID: 11883393}
-  prelRender: {fileID: 120510019555225352, guid: c5ca6336f31274998a93db1b69c9eea0,
-    type: 2}
-  sm: {fileID: 361470552}
-  m_Line: {fileID: 2100000, guid: f45317d0ee2b646a3a8179fe542ec22d, type: 2}
-  distances: []
-  from: {x: 0, y: 0, z: 0}
-  to: {x: 0, y: 0, z: 0}
 --- !u!1 &359002941
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,14 +677,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 361470551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49fe77798a52d4315ba0a804d427ca09, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cd24855af97d472c80d1e6c4f98708c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hintP: {fileID: 1473510567}
   linesGenerator: {fileID: 11883393}
+  dotsGenerator: {fileID: 2031635913}
   hintText: {fileID: 1932653072}
   hintTextAniController: {fileID: 1932653074}
-  cd: {fileID: 267663813}
+  cd: {fileID: 267663810}
   btn_Reset: {fileID: 3741315}
   btn_Clear: {fileID: 1093306410}
   measuringDistance: 0
@@ -1732,7 +1734,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 267663813}
+      - m_Target: {fileID: 267663810}
         m_MethodName: AddPoint
         m_Mode: 1
         m_Arguments:
@@ -2197,7 +2199,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1997520652}
-  - component: {fileID: 1997520653}
+  - component: {fileID: 1997520651}
   m_Layer: 0
   m_Name: FocusSquare
   m_TagString: Untagged
@@ -2205,6 +2207,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1997520651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1997520650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c3847022c97b4d31b0a5cd4173d1f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerDot: {fileID: 267663808}
+  foundSquare: {fileID: 1163840784}
+  sm: {fileID: 361470552}
+  maxRayDistance: 30
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  hitPoint: {x: 0, y: 0, z: 0}
+  findingSquareDist: 0.5
 --- !u!4 &1997520652
 Transform:
   m_ObjectHideFlags: 0
@@ -2219,23 +2241,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1997520653
-MonoBehaviour:
+--- !u!1 &2031635913
+GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1997520650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e14129de55dd4b9cb0532ba19967e34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  centerDot: {fileID: 267663808}
-  foundSquare: {fileID: 1163840784}
-  sm: {fileID: 361470552}
-  maxRayDistance: 30
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  hitPoint: {x: 0, y: 0, z: 0}
-  findingSquareDist: 0.5
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2031635914}
+  m_Layer: 0
+  m_Name: DotsGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2031635914
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2031635913}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

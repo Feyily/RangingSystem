@@ -2,20 +2,14 @@
 using UnityEngine;
 using UnityEngine.XR.iOS;
 
-public enum PointState {
-    finding,
-    Placed,
-    Adsorpting
-}
+public class Length_CenterDot : MonoBehaviour {
 
-public class CenterDot : MonoBehaviour {
-
-    public FindingPlanes fp;
+    public Length_FindingPlanes fp;
 
     public GameObject pointPrefeb;
     public GameObject linesGenerator;
     public LineRenderer prelRender;
-    public ScenceManager sm;
+    public Length_ScenceManager sm;
     public Material m_Line;
 
     [HideInInspector]
@@ -70,7 +64,7 @@ public class CenterDot : MonoBehaviour {
     {
         if (fp.SquareState == FocusState.Found)
         {
-            Instantiate(pointPrefeb, fp.hitPoint, pointPrefeb.transform.rotation);
+            currentDot = Instantiate(pointPrefeb, fp.hitPoint, pointPrefeb.transform.rotation);
             //from = fp.hitPoint;
             pointCount++;
             //添加的是第一个点还是第二个点
