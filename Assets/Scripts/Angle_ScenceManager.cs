@@ -15,9 +15,9 @@ public class Angle_ScenceManager : MonoBehaviour {
     public Button btn_Reset;
     public Button btn_Clear;
     [HideInInspector]
-    public float measuringDistance;
+    public float measuringAngle;
     [HideInInspector]
-    public string displayDistance;
+    public string displayAngle;
 
     private MeasureStatus mStatus;
     private UnityARSessionNativeInterface m_session;
@@ -44,8 +44,20 @@ public class Angle_ScenceManager : MonoBehaviour {
                     btn_Clear.interactable = false;
                     TransAnimation(true);
                     break;
-                case MeasureStatus.Measuring:
-                    hintText.text = DistanceToString(measuringDistance);
+                case MeasureStatus.Line_Drawing:
+                    hintText.text = "添加下一个点";
+                    btn_Reset.interactable = true;
+                    btn_Clear.interactable = true;
+                    TransAnimation(true);
+                    break;
+                case MeasureStatus.Wating:
+                    hintText.text = "添加下一条边";
+                    btn_Reset.interactable = true;
+                    btn_Clear.interactable = false;
+                    TransAnimation(true);
+                    break;
+                case MeasureStatus.Angle_Measuring:
+                    hintText.text = DistanceToString(measuringAngle);
                     btn_Clear.interactable = btn_Reset.interactable = true;
                     TransAnimation(false);
                     break;
@@ -74,9 +86,9 @@ public class Angle_ScenceManager : MonoBehaviour {
         hintTextAniController.SetBool("isFlash", isFlash);
     }
 
-    string DistanceToString(float dis) {
-        displayDistance = dis >= 1.0f ? dis.ToString("0.00") + "米" : Mathf.Round(dis * 100) + "厘米";
-        return displayDistance;
+    string DistanceToString(float ang) {
+        displayAngle = ang + "。";
+        return displayAngle;
     }
 
     public void ResetScence() {

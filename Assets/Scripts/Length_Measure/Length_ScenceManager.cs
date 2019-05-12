@@ -43,7 +43,7 @@ public class Length_ScenceManager : MonoBehaviour {
                     btn_Clear.interactable = false;
                     TransAnimation(true);
                     break;
-                case MeasureStatus.Measuring:
+                case MeasureStatus.Length_Measuring:
                     hintText.text = DistanceToString(measuringDistance);
                     btn_Clear.interactable = btn_Reset.interactable = true;
                     TransAnimation(false);

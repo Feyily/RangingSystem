@@ -14,33 +14,38 @@ public class Angle_CenterDot : MonoBehaviour {
     public Material m_Line;
     public float min_AbsorbDistance = 100.0f;
 
-    [HideInInspector]
-    //保存已有的距离，用于计算面积
-    public List<float> distances;
-    //临时距离变量
-    private float t_Distance;
-
-    private PointState dotState;
+    private PointState dotStatus;
+    //当前吸附的目标点坐标
+    private Vector3 current_absorb = Vector3.zero;
     private LineRenderer lRender;
     private GameObject currentDot;
-    private GameObject _hintBox;
+    //保存角的第一/第二条边
+    private Vector3 edge1, edge2;
+    //临时保存测量出的角度
+    private float angle;
     int pointCount = 0;
     Vector2 screenCenter;
 
     [HideInInspector]
     //测量的起始/终止点
     public Vector3 from, to;
+    public List<Vector3> vectors;
 
-    public PointState DotState
-    {
-        get
-        {
-            return dotState;
+    public PointState DotState {
+        get {
+            return dotStatus;
         }
-
-        set
-        {
-            dotState = value;
+        set {
+            switch (value)
+            {
+                case PointState.finding:
+                    transform.position = screenCenter;
+                    break;
+                case PointState.Placed:
+                    break;
+                case PointState.Adsorpting:
+                    break;
+            }
         }
     }
 
@@ -54,64 +59,73 @@ public class Angle_CenterDot : MonoBehaviour {
         DetectDots();
         if (from != Vector3.zero && to == Vector3.zero)
         {
-            t_Distance=Vector3.Distance(from, fp.hitPoint);
             lRender.SetPosition(1, fp.hitPoint);
-            sm.MStatus = MeasureStatus.Measuring;
-            sm.measuringDistance = t_Distance;
         }
-        else if (from != Vector3.zero&&to != Vector3.zero)
+        else if (from != Vector3.zero && to != Vector3.zero)
         {
-            distances.Add(t_Distance);
+            edge1 = to - from;
             from = to = Vector3.zero;
-            pointCount = 0;
-            dotState = PointState.finding;
-
+            DotState = PointState.finding;
+        }
+        if (from != Vector3.zero && current_absorb != Vector3.zero)
+        {
+            edge2 = fp.hitPoint - current_absorb;
+            angle = Vector3.Angle(edge1, edge2);
+            sm.measuringAngle = angle;
+            sm.MStatus = MeasureStatus.Angle_Measuring;
         }
     }
-
+    //吸附现有的点
     void DetectDots() {
         int _chindCount = dotsGenerator.transform.childCount;
         for (int i = 0; i < _chindCount; i++)
         {
-            Vector3 _wpos_dot = Camera.main.WorldToScreenPoint(dotsGenerator.transform.GetChild(i).position);
+            //记录当前目标吸附点的坐标
+            current_absorb = dotsGenerator.transform.GetChild(i).position;
+            Vector3 _wpos_dot = Camera.main.WorldToScreenPoint(current_absorb);
             Vector2 _screenpos_dot = new Vector2(_wpos_dot.x, _wpos_dot.y);
             float _gap = Vector2.Distance(_screenpos_dot, screenCenter);
             if (_gap < min_AbsorbDistance) {
                 transform.position = _screenpos_dot;
+                //点状态变更为“吸附”
+                DotState = PointState.Adsorpting;
                 return;
             }
-            transform.position = screenCenter;
+            DotState = PointState.finding;
+            //
         }
     }
-
+    //绘制点
     public void AddPoint()
     {
-        if (fp.SquareState == FocusState.Found)
+       if (fp.SquareState == FocusState.Found)
         {
-            currentDot = Instantiate(pointPrefeb, fp.hitPoint, pointPrefeb.transform.rotation, dotsGenerator.transform);
-            //from = fp.hitPoint;
             pointCount++;
             //添加的是第一个点还是第二个点
             if (pointCount % 2 != 0)
             {
-                from = fp.hitPoint;
+                if(DotState != PointState.Adsorpting)
+                    currentDot = Instantiate(pointPrefeb, fp.hitPoint, pointPrefeb.transform.rotation);
+                from = DotState == PointState.Adsorpting ? current_absorb : fp.hitPoint;
                 lRender = Instantiate(prelRender, linesGenerator.transform);
                 lRender.SetPosition(0, from);
-                //得到虚线上的提示框
-                //_hintBox = lRender.GetComponentInChildren<Transform>().gameObject;
-                //_hintBox.SetActive(true);
-
-                //UnityARSessionNativeInterface.ARFrameUpdatedEvent += lRender.GetComponentInChildren<TracingLine>().ARFrameUpdate;
+                sm.MStatus = MeasureStatus.Line_Drawing;
             }
             else
             {
-                to = fp.hitPoint;
-                //UnityARSessionNativeInterface.ARFrameUpdatedEvent -= lRender.GetComponentInChildren<TracingLine>().ARFrameUpdate;
-                lRender.transform.Find("HintBoxParent").gameObject.SetActive(true);
-                lRender.GetComponent<LineRenderer>().material = m_Line;
-                sm.MStatus = MeasureStatus.Complete;
+                if (DotState != PointState.Adsorpting)
+                {
+                    currentDot.transform.SetParent(dotsGenerator.transform);
+                    currentDot = Instantiate(pointPrefeb, fp.hitPoint, pointPrefeb.transform.rotation, dotsGenerator.transform);
+                }
+                to = DotState == PointState.Adsorpting ? current_absorb : fp.hitPoint;
+                //若正在测量中，添加了最后一个点
+                if (sm.MStatus == MeasureStatus.Angle_Measuring)
+                    sm.MStatus = MeasureStatus.Complete;
+                else
+                    sm.MStatus = MeasureStatus.Wating;
             }
-            dotState = PointState.Placed;
+            DotState = PointState.Placed;
         }
     }
 

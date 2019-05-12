@@ -47,7 +47,7 @@ public class Length_CenterDot : MonoBehaviour {
         {
             t_Distance=Vector3.Distance(from, fp.hitPoint);
             lRender.SetPosition(1, fp.hitPoint);
-            sm.MStatus = MeasureStatus.Measuring;
+            sm.MStatus = MeasureStatus.Length_Measuring;
             sm.measuringDistance = t_Distance;
         }
         else if (from != Vector3.zero&&to != Vector3.zero)

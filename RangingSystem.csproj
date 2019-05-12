@@ -110,11 +110,12 @@
     <Compile Include="Assets\Scripts\Angle_FindingPlanes.cs" />
     <Compile Include="Assets\Scripts\Angle_ScenceManager.cs" />
     <Compile Include="Assets\Scripts\Angle_SquareMove.cs" />
+    <Compile Include="Assets\Scripts\Angle_TracingLine.cs" />
     <Compile Include="Assets\Scripts\Length_Measure\Length_CenterDot.cs" />
     <Compile Include="Assets\Scripts\Length_Measure\Length_FindingPlanes.cs" />
     <Compile Include="Assets\Scripts\Length_Measure\Length_ScenceManager.cs" />
+    <Compile Include="Assets\Scripts\Length_Measure\Length_TracingLine.cs" />
     <Compile Include="Assets\Scripts\ObjectStatus.cs" />
-    <Compile Include="Assets\Scripts\TracingLine.cs" />
     <Compile Include="Assets\UnityARKitPlugin\ARKitRemote\ARKitFaceTrackingRemoteConnection.cs" />
     <Compile Include="Assets\UnityARKitPlugin\ARKitRemote\ARKitRemoteConnection.cs" />
     <Compile Include="Assets\UnityARKitPlugin\ARKitRemote\ConnectionMessageIds.cs" />
