@@ -451,7 +451,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 246070545}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -542,12 +542,11 @@ MonoBehaviour:
     type: 2}
   linesGenerator: {fileID: 11883393}
   dotsGenerator: {fileID: 2031635913}
-  prelRender: {fileID: 120510019555225352, guid: c5ca6336f31274998a93db1b69c9eea0,
+  prelRender: {fileID: 120510019555225352, guid: a40ec9264bd6a4f6881b8c1769702f09,
     type: 2}
   sm: {fileID: 361470552}
   m_Line: {fileID: 2100000, guid: f45317d0ee2b646a3a8179fe542ec22d, type: 2}
   min_AbsorbDistance: 100
-  distances: []
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
   vectors: []
@@ -718,8 +717,9 @@ MonoBehaviour:
   cd: {fileID: 267663810}
   btn_Reset: {fileID: 3741315}
   btn_Clear: {fileID: 1093306410}
-  measuringDistance: 0
-  displayDistance: 
+  measuringAngle: 0
+  displayAngle: 
+  mStatus: 0
 --- !u!4 &361470553
 Transform:
   m_ObjectHideFlags: 0
@@ -805,7 +805,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 382488442}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -1356,7 +1356,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 969302690}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2175,7 +2175,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1849819005}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []

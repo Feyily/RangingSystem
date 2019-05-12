@@ -19,7 +19,7 @@ public class Angle_ScenceManager : MonoBehaviour {
     [HideInInspector]
     public string displayAngle;
 
-    private MeasureStatus mStatus;
+    public MeasureStatus mStatus;
     private UnityARSessionNativeInterface m_session;
 
     public MeasureStatus MStatus

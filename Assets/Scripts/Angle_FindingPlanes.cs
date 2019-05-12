@@ -26,7 +26,7 @@ public class Angle_FindingPlanes : MonoBehaviour{
             squareState = value;
             foundSquare.SetActive(squareState == FocusState.Found);
             centerDot.SetActive(squareState == FocusState.Found);
-            if (squareState == FocusState.Found && sm.MStatus != MeasureStatus.Complete)
+            if (squareState == FocusState.Found && sm.MStatus == MeasureStatus.Initializing)
                 sm.MStatus = MeasureStatus.Adding;
             //findingSquare.SetActive(squareState != FocusState.Found);
         }

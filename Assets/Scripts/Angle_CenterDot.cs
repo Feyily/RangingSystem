@@ -56,11 +56,11 @@ public class Angle_CenterDot : MonoBehaviour {
 
     private void Update()
     {
-        DetectDots();
-        if (from != Vector3.zero && to == Vector3.zero)
-        {
+        //测量角度中不吸附
+        if (sm.MStatus != MeasureStatus.Angle_Measuring)
+            DetectDots();
+        if (from != Vector3.zero && to == Vector3.zero) 
             lRender.SetPosition(1, fp.hitPoint);
-        }
         else if (from != Vector3.zero && to != Vector3.zero)
         {
             edge1 = to - from;
@@ -115,10 +115,13 @@ public class Angle_CenterDot : MonoBehaviour {
             {
                 if (DotState != PointState.Adsorpting)
                 {
+                    //先将上一个点的父级元素设置为dotsGenerator
                     currentDot.transform.SetParent(dotsGenerator.transform);
+                    //再生成下一个点
                     currentDot = Instantiate(pointPrefeb, fp.hitPoint, pointPrefeb.transform.rotation, dotsGenerator.transform);
                 }
                 to = DotState == PointState.Adsorpting ? current_absorb : fp.hitPoint;
+                lRender.GetComponent<LineRenderer>().material = m_Line;
                 //若正在测量中，添加了最后一个点
                 if (sm.MStatus == MeasureStatus.Angle_Measuring)
                     sm.MStatus = MeasureStatus.Complete;
