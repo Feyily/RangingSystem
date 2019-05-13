@@ -106,11 +106,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Angle_CenterDot.cs" />
-    <Compile Include="Assets\Scripts\Angle_FindingPlanes.cs" />
-    <Compile Include="Assets\Scripts\Angle_ScenceManager.cs" />
-    <Compile Include="Assets\Scripts\Angle_SquareMove.cs" />
-    <Compile Include="Assets\Scripts\Angle_TracingLine.cs" />
+    <Compile Include="Assets\Scripts\Angle_Measure\Angle_CenterDot.cs" />
+    <Compile Include="Assets\Scripts\Angle_Measure\Angle_FindingPlanes.cs" />
+    <Compile Include="Assets\Scripts\Angle_Measure\Angle_ScenceManager.cs" />
+    <Compile Include="Assets\Scripts\Angle_Measure\Angle_SquareMove.cs" />
+    <Compile Include="Assets\Scripts\Angle_Measure\Angle_TracingLine.cs" />
+    <Compile Include="Assets\Scripts\Distance_CenterDot.cs" />
+    <Compile Include="Assets\Scripts\Distance_FindingPlanes.cs" />
+    <Compile Include="Assets\Scripts\Distance_ScenceManager.cs" />
+    <Compile Include="Assets\Scripts\Distance_TracingLine.cs" />
     <Compile Include="Assets\Scripts\Length_Measure\Length_CenterDot.cs" />
     <Compile Include="Assets\Scripts\Length_Measure\Length_FindingPlanes.cs" />
     <Compile Include="Assets\Scripts\Length_Measure\Length_ScenceManager.cs" />

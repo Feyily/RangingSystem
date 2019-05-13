@@ -4,22 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.iOS;
 
-public class Angle_ScenceManager : MonoBehaviour {
+public class Distance_ScenceManager : MonoBehaviour {
 
     public GameObject hintP;
     public GameObject linesGenerator;
-    public GameObject dotsGenerator;
     public Text hintText;
     public Animator hintTextAniController;
-    public Angle_CenterDot cd;
+    public Distance_CenterDot cd;
     public Button btn_Reset;
     public Button btn_Clear;
     [HideInInspector]
-    public float measuringAngle;
+    public float measuringDistance;
     [HideInInspector]
-    public string displayAngle;
+    public string displayDistance;
 
-    public MeasureStatus mStatus;
+    private MeasureStatus mStatus;
     private UnityARSessionNativeInterface m_session;
 
     public MeasureStatus MStatus
@@ -44,20 +43,8 @@ public class Angle_ScenceManager : MonoBehaviour {
                     btn_Clear.interactable = false;
                     TransAnimation(true);
                     break;
-                case MeasureStatus.Line_Drawing:
-                    hintText.text = "添加下一个点";
-                    btn_Reset.interactable = true;
-                    btn_Clear.interactable = true;
-                    TransAnimation(true);
-                    break;
-                case MeasureStatus.Wating:
-                    hintText.text = "添加下一条边";
-                    btn_Reset.interactable = true;
-                    btn_Clear.interactable = false;
-                    TransAnimation(true);
-                    break;
-                case MeasureStatus.Angle_Measuring:
-                    hintText.text = DistanceToString(measuringAngle);
+                case MeasureStatus.Length_Measuring:
+                    hintText.text = DistanceToString(measuringDistance);
                     btn_Clear.interactable = btn_Reset.interactable = true;
                     TransAnimation(false);
                     break;
@@ -86,9 +73,9 @@ public class Angle_ScenceManager : MonoBehaviour {
         hintTextAniController.SetBool("isFlash", isFlash);
     }
 
-    string DistanceToString(float ang) {
-        displayAngle = ang + "。";
-        return displayAngle;
+    string DistanceToString(float dis) {
+        displayDistance = dis >= 1.0f ? dis.ToString("0.00") + "米" : Mathf.Round(dis * 100) + "厘米";
+        return displayDistance;
     }
 
     public void ResetScence() {
