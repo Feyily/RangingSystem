@@ -7,16 +7,21 @@ using UnityEngine.XR.iOS;
 public class Distance_ScenceManager : MonoBehaviour {
 
     public GameObject hintP;
-    public GameObject linesGenerator;
+
     public Text hintText;
+
     public Animator hintTextAniController;
     public Distance_CenterDot cd;
     public Button btn_Reset;
     public Button btn_Clear;
+    public Button btn_Add;
     [HideInInspector]
     public float measuringDistance;
     [HideInInspector]
     public string displayDistance;
+    //目标平面副本
+    [HideInInspector]
+    public Plane _targetPlane;
 
     private MeasureStatus mStatus;
     private UnityARSessionNativeInterface m_session;
@@ -38,15 +43,18 @@ public class Distance_ScenceManager : MonoBehaviour {
                     TransAnimation(true);
                     break;
                 case MeasureStatus.Adding:
-                    hintText.text = "添加点以开始";
+                    hintText.text = "请在平面添加三个点以开始";
+                    btn_Add.interactable = true;
                     btn_Reset.interactable = true;
                     btn_Clear.interactable = false;
                     TransAnimation(true);
                     break;
-                case MeasureStatus.Length_Measuring:
-                    hintText.text = DistanceToString(measuringDistance);
+                case MeasureStatus.Distance_Measuring:
+                    hintText.text = "点击重置按钮可以再次测量";
+                    DistanceToString(measuringDistance);
+                    btn_Add.interactable = false;
                     btn_Clear.interactable = btn_Reset.interactable = true;
-                    TransAnimation(false);
+                    TransAnimation(true);
                     break;
                 case MeasureStatus.NeedLight:
                     hintText.text = "需要更多光线";
@@ -69,6 +77,16 @@ public class Distance_ScenceManager : MonoBehaviour {
         m_session = UnityARSessionNativeInterface.GetARSessionNativeInterface();
     }
 
+    private void Update()
+    {
+        if (MStatus== MeasureStatus.Distance_Measuring)
+        {
+            Vector3 _current_pos = Camera.main.transform.position;
+            measuringDistance = _targetPlane.GetDistance(_current_pos);
+            MStatus = MeasureStatus.Distance_Measuring;
+        }
+    }
+
     void TransAnimation(bool isFlash) {
         hintTextAniController.SetBool("isFlash", isFlash);
     }
@@ -79,9 +97,7 @@ public class Distance_ScenceManager : MonoBehaviour {
     }
 
     public void ResetScence() {
-        int c_count = linesGenerator.transform.childCount;
-        for (int i = 0; i < c_count; i++)       
-            Destroy(linesGenerator.transform.GetChild(i).gameObject);
+        ClearPoints();
         ARKitWorldTrackingSessionConfiguration config = new ARKitWorldTrackingSessionConfiguration(
             UnityARAlignment.UnityARAlignmentGravity,
             UnityARPlaneDetection.Horizontal,
@@ -90,7 +106,11 @@ public class Distance_ScenceManager : MonoBehaviour {
         m_session.RunWithConfigAndOptions(config, UnityARSessionRunOption.ARSessionRunOptionRemoveExistingAnchors);
     }
     public void ClearPoints() {
+        if (MStatus==MeasureStatus.Adding)
+            cd.DeleteCurrentPoints();
+        Distance_ResultText _rt = FindObjectOfType<Distance_ResultText>();
+        if (_rt != null)
+            Destroy(_rt.gameObject);
         MStatus = MeasureStatus.Adding;
-        cd.DeleteCurrentPoints();
     }
 }

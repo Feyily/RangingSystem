@@ -1,100 +1,69 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.iOS;
+using UnityEngine.UI;
 
 public class Distance_CenterDot : MonoBehaviour {
 
-    public Distance_FindingPlanes fp;
-
+    //所需预制件
     public GameObject pointPrefeb;
-    public GameObject linesGenerator;
-    public LineRenderer prelRender;
+    public GameObject pinPrefeb;
+    public GameObject dotsGenerator;
+
+    public Distance_FindingPlanes fp;
+    public Canvas canvas;
     public Distance_ScenceManager sm;
-    public Material m_Line;
+
+    private GameObject pin;
 
     [HideInInspector]
-    //保存已有的距离，用于计算面积
-    public List<float> distances;
-    //临时距离变量
-    private float t_Distance;
+    //测量平面的特征点
+    public Vector3[] p = new Vector3[3];
+    Plane targetPlane;
+    int pointCount;
 
-    private PointState dotState;
-    private LineRenderer lRender;
-    private GameObject currentDot;
-    private GameObject _hintBox;
-    int pointCount = 0;
-
-    [HideInInspector]
-    //测量的起始/终止点
-    public Vector3 from, to;
-
-    public PointState DotState
-    {
-        get
-        {
-            return dotState;
-        }
-
-        set
-        {
-            dotState = value;
-        }
-    }
-
-    private void Update()
-    {
-        if (from != Vector3.zero && to == Vector3.zero)
-        {
-            t_Distance=Vector3.Distance(from, fp.hitPoint);
-            lRender.SetPosition(1, fp.hitPoint);
-            sm.MStatus = MeasureStatus.Length_Measuring;
-            sm.measuringDistance = t_Distance;
-        }
-        else if (from != Vector3.zero&&to != Vector3.zero)
-        {
-            distances.Add(t_Distance);
-            from = to = Vector3.zero;
-            pointCount = 0;
-            dotState = PointState.finding;
-
-        }
-    }
 
     public void AddPoint()
     {
         if (fp.SquareState == FocusState.Found)
         {
-            currentDot = Instantiate(pointPrefeb, fp.hitPoint, pointPrefeb.transform.rotation);
-            //from = fp.hitPoint;
-            pointCount++;
-            //添加的是第一个点还是第二个点
-            if (pointCount % 2 != 0)
+            //添加Pin
+            if (sm.MStatus == MeasureStatus.Adding)
             {
-                from = fp.hitPoint;
-                lRender = Instantiate(prelRender, linesGenerator.transform);
-                lRender.SetPosition(0, from);
-                //得到虚线上的提示框
-                //_hintBox = lRender.GetComponentInChildren<Transform>().gameObject;
-                //_hintBox.SetActive(true);
-
-                //UnityARSessionNativeInterface.ARFrameUpdatedEvent += lRender.GetComponentInChildren<TracingLine>().ARFrameUpdate;
+                Instantiate(pointPrefeb, fp.hitPoint, pointPrefeb.transform.rotation,dotsGenerator.transform);
+                p[pointCount++] = fp.hitPoint;
+                if (pointCount == 3)
+                {
+                    Vector3 edge1 = p[0] - p[1];
+                    Vector3 edge2 = p[2] - p[1];
+                    //计算被测平面的法向量
+                    Vector3 normal_v = Vector3.Cross(edge1, edge2);
+                    //获得平面方程
+                    targetPlane = new Plane
+                    {
+                        a = normal_v.x,
+                        b = normal_v.y,
+                        c = normal_v.z,
+                        d = (normal_v.x * -p[1].x) + (normal_v.y * -p[1].y) + (normal_v.z * -p[1].z),
+                        magnitude = normal_v.magnitude
+                    };
+                    //Vector3 _ins_pos = Camera.main.WorldToScreenPoint(p[1]);
+                    pin = Instantiate(pinPrefeb, canvas.transform);
+                    pin.GetComponent<Distance_ResultText>().pin = p[2];
+                    DeleteCurrentPoints();
+                    sm._targetPlane = targetPlane;
+                    sm.MStatus = MeasureStatus.Distance_Measuring;
+                    fp.SquareState = FocusState.Hidden;
+                }
             }
-            else
-            {
-                to = fp.hitPoint;
-                //UnityARSessionNativeInterface.ARFrameUpdatedEvent -= lRender.GetComponentInChildren<TracingLine>().ARFrameUpdate;
-                lRender.transform.Find("HintBoxParent").gameObject.SetActive(true);
-                lRender.GetComponent<LineRenderer>().material = m_Line;
-                sm.MStatus = MeasureStatus.Complete;
-            }
-            dotState = PointState.Placed;
         }
     }
-
-    public void DeleteCurrentPoints() {
+    public void DeleteCurrentPoints()
+    {
         pointCount = 0;
-        from = to = Vector3.zero;
-        Destroy(currentDot);
-        Destroy(lRender.transform.gameObject);
+        for (int i = 0; i < 3; i++)
+            p[i] = Vector3.zero;
+        int _childCount = dotsGenerator.transform.childCount;
+        for (int i = 0; i < _childCount; i++)
+            Destroy(dotsGenerator.transform.GetChild(i).gameObject);
     }
 }

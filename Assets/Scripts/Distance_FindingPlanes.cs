@@ -2,6 +2,18 @@
 using UnityEngine;
 using UnityEngine.XR.iOS;
 
+public struct Plane
+{
+    public float a, b, c, d, magnitude;
+    //计算点到面的距离
+    public float GetDistance(Vector3 p)
+    {
+        float _numerator = Mathf.Abs(a * p.x + b * p.y + c * p.z + d);
+        float _dis = _numerator / magnitude;
+        return _dis;
+    }
+}
+
 public class Distance_FindingPlanes : MonoBehaviour{
     public GameObject centerDot;
     public GameObject foundSquare;
@@ -26,9 +38,8 @@ public class Distance_FindingPlanes : MonoBehaviour{
             squareState = value;
             foundSquare.SetActive(squareState == FocusState.Found);
             centerDot.SetActive(squareState == FocusState.Found);
-            if (squareState == FocusState.Found && sm.MStatus != MeasureStatus.Complete)
+            if (squareState == FocusState.Found && sm.MStatus == MeasureStatus.Initializing)
                 sm.MStatus = MeasureStatus.Adding;
-            //findingSquare.SetActive(squareState != FocusState.Found);
         }
     }
 
@@ -41,6 +52,7 @@ public class Distance_FindingPlanes : MonoBehaviour{
             {
                 hitPoint = UnityARMatrixOps.GetPosition(hitResult.worldTransform);
                 foundSquare.transform.position = hitPoint;
+                foundSquare.transform.rotation = UnityARMatrixOps.GetRotation(hitResult.worldTransform);
                 return true;
             }
         }
@@ -56,8 +68,8 @@ public class Distance_FindingPlanes : MonoBehaviour{
     // Update is called once per frame
     void Update()
     {
-    
-
+        if (sm.MStatus == MeasureStatus.Distance_Measuring)
+            return;
         //use center of screen for focusing
         Vector3 center = new Vector3(Screen.width / 2, Screen.height / 2, findingSquareDist);
         var screenPosition = Camera.main.ScreenToViewportPoint(center);
@@ -66,6 +78,7 @@ public class Distance_FindingPlanes : MonoBehaviour{
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, maxRayDistance, collisionLayer))
         {
+            
             hitPoint = hit.point;
             foundSquare.transform.position = hitPoint;
             SquareState = FocusState.Found;
