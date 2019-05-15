@@ -186,7 +186,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361470552}
+      - m_Target: {fileID: 0}
         m_MethodName: ResetScence
         m_Mode: 1
         m_Arguments:
@@ -534,20 +534,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 267663808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a03211613d3f416ca77b453425f3f2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f0ddc1dc15224357b4f34ea89bcd3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fp: {fileID: 1997520651}
-  pointPrefeb: {fileID: 1989281111113808, guid: b87b5090e7da54cf28091334b16a8e78,
-    type: 2}
   linesGenerator: {fileID: 11883393}
-  dotsGenerator: {fileID: 2031635913}
-  prelRender: {fileID: 120510019555225352, guid: a40ec9264bd6a4f6881b8c1769702f09,
+  prelRender: {fileID: 120510019555225352, guid: e9740b2d305044674b2e9cd14d74f534,
     type: 2}
   sm: {fileID: 361470552}
   m_Line: {fileID: 2100000, guid: f45317d0ee2b646a3a8179fe542ec22d, type: 2}
+  min_AbsorbDistance: 100
   from: {x: 0, y: 0, z: 0}
-  to: {x: 0, y: 0, z: 0}
+  points: []
 --- !u!114 &267663811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,19 +702,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 361470551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd24855af97d472c80d1e6c4f98708c, type: 3}
+  m_Script: {fileID: 11500000, guid: 971f98471a39f4aa4991ce8126453112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hintP: {fileID: 1473510567}
   linesGenerator: {fileID: 11883393}
-  dotsGenerator: {fileID: 2031635913}
   hintText: {fileID: 1932653072}
   hintTextAniController: {fileID: 1932653074}
   cd: {fileID: 267663810}
   btn_Reset: {fileID: 3741315}
   btn_Clear: {fileID: 1093306410}
-  measuringAngle: 0
-  displayAngle: 
+  measuringLength: 0
+  displayLength: 
 --- !u!4 &361470553
 Transform:
   m_ObjectHideFlags: 0
@@ -1467,7 +1464,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361470552}
+      - m_Target: {fileID: 0}
         m_MethodName: ClearPoints
         m_Mode: 1
         m_Arguments:
@@ -2341,7 +2338,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1997520650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c3847022c97b4d31b0a5cd4173d1f80, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c03ee511df704c0cae7a36a2df4f106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   centerDot: {fileID: 267663808}
@@ -2366,32 +2363,4 @@ Transform:
   - {fileID: 1163840785}
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2031635913
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2031635914}
-  m_Layer: 0
-  m_Name: DotsGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2031635914
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2031635913}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
