@@ -82,10 +82,9 @@ public class Area_CenterDot : MonoBehaviour {
                     sm.MStatus = MeasureStatus.Line_Drawing;
                     break;
                 case MeasureStatus.Line_Drawing:
-                    Vector3 _lay = (points[pointCount - 2] + points[pointCount - 1]) / 2;
-                    Quaternion q = Quaternion.identity;
-                    q.SetLookRotation(fp.hitPoint);
-                    GameObject _g_hint = Instantiate(hint_Prefeb, _lay, q, lRender.transform);
+                    Vector3 _lay = (points[pointCount - 2] + points[pointCount - 1]) / 2;          
+                    GameObject _g_hint = Instantiate(hint_Prefeb, _lay, hint_Prefeb.transform.rotation, lRender.transform);
+                    _g_hint.transform.LookAt(fp.hitPoint);
                     _g_hint.GetComponentInChildren<TextMesh>().text = sm.displayLength;
                     AddLinePoint(fp.hitPoint);
                     break;
@@ -95,14 +94,22 @@ public class Area_CenterDot : MonoBehaviour {
                 points[pointCount - 1] = from;
                 lRender.SetPositions(points.ToArray());
                 lRender.GetComponent<LineRenderer>().material = m_Line;
+                ComputeArea();
+                DotState = PointState.finding;
                 sm.MStatus = MeasureStatus.Complete;
+                lRender.transform.Find("TextParent").gameObject.SetActive(true);
+                points.Clear();
+                pointCount = 0;
             }
         }
     }
 
-    public void DeleteCurrentPoints()
+    public void ClearCurrentMeasure()
     {
-
+        if (lRender != null)
+            Destroy(lRender.gameObject);
+        points.Clear();
+        pointCount = 0;
     }
 
     void AddLinePoint(Vector3 p)
@@ -115,7 +122,7 @@ public class Area_CenterDot : MonoBehaviour {
 
     void DetectDot() {
         //当前端点数大于2时，开启检测吸附
-        if (pointCount>2)
+        if (pointCount > 2)
         {
             Vector3 _wpos_dot = Camera.main.WorldToScreenPoint(from);
             Vector2 _screenpos_dot = new Vector2(_wpos_dot.x, _wpos_dot.y);
@@ -129,5 +136,23 @@ public class Area_CenterDot : MonoBehaviour {
             }
         }
         DotState = PointState.finding;
+    }
+
+    void ComputeArea()
+    {
+        float l = 0, m = 0, n = 0;
+        int _p_count = pointCount;
+        for (int i = 0; i < _p_count; i++)
+        {
+            l += points[i].x * points[(i + 1) % _p_count].y -
+                points[(i + 1) % _p_count].x * points[i].y;
+
+            m += points[i].y * points[(i + 1) % _p_count].z -
+                points[(i + 1) % _p_count].y * points[i].z;
+
+            n += points[i].z * points[(i + 1) % _p_count].x -
+                points[(i + 1) % _p_count].z * points[i].x;
+        }
+        sm.measuringArea = Mathf.Sqrt(l * l + m * m + n * n) * 0.5f;
     }
 }

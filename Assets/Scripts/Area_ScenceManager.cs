@@ -17,6 +17,11 @@ public class Area_ScenceManager : MonoBehaviour {
     public float measuringLength;
     [HideInInspector]
     public string displayLength;
+    //面积
+    [HideInInspector]
+    public float measuringArea;
+    [HideInInspector]
+    public string dispalyArea;
 
     private MeasureStatus mStatus;
     private UnityARSessionNativeInterface m_session;
@@ -53,6 +58,7 @@ public class Area_ScenceManager : MonoBehaviour {
                     TransAnimation(true);
                     break;
                 case MeasureStatus.Complete:
+                    AreaToString(measuringArea);
                     hintText.text = "添加点继续测量";
                     btn_Reset.interactable = true;
                     btn_Clear.interactable = false;
@@ -78,18 +84,26 @@ public class Area_ScenceManager : MonoBehaviour {
         return displayLength;
     }
 
+    string AreaToString(float _area) {
+        dispalyArea = _area >= 1.0f ? _area.ToString("0.00") + "m²" : Mathf.Round(_area * 10000) + "cm²";
+        return dispalyArea;
+    }
+
     public void ResetScence() {
         int c_count = linesGenerator.transform.childCount;
         for (int i = 0; i < c_count; i++)
             Destroy(linesGenerator.transform.GetChild(i).gameObject);
+        cd.ClearCurrentMeasure();
         ARKitWorldTrackingSessionConfiguration config = new ARKitWorldTrackingSessionConfiguration(
             UnityARAlignment.UnityARAlignmentGravity,
             UnityARPlaneDetection.Horizontal,
             true, true
             );
         m_session.RunWithConfigAndOptions(config, UnityARSessionRunOption.ARSessionRunOptionRemoveExistingAnchors);
+        MStatus = MeasureStatus.Initializing;
     }
     public void ClearPoints() {
-        cd.DeleteCurrentPoints();
+        MStatus = MeasureStatus.Adding;
+        cd.ClearCurrentMeasure();
     }
 }
