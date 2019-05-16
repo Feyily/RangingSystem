@@ -9,6 +9,7 @@ public class Area_CenterDot : MonoBehaviour {
     public LineRenderer prelRender;
     public Area_ScenceManager sm;
     public Material m_Line;
+    public GameObject hint_Prefeb;
 
     //最小吸附距离
     public float min_AbsorbDistance = 100.0f;
@@ -81,15 +82,19 @@ public class Area_CenterDot : MonoBehaviour {
                     sm.MStatus = MeasureStatus.Line_Drawing;
                     break;
                 case MeasureStatus.Line_Drawing:
+                    Vector3 _lay = (points[pointCount - 2] + points[pointCount - 1]) / 2;
+                    Quaternion q = Quaternion.identity;
+                    q.SetLookRotation(fp.hitPoint);
+                    GameObject _g_hint = Instantiate(hint_Prefeb, _lay, q, lRender.transform);
+                    _g_hint.GetComponentInChildren<TextMesh>().text = sm.displayLength;
                     AddLinePoint(fp.hitPoint);
-                    break;          
+                    break;
             }
             if (DotState==PointState.Adsorpting)
             {
                 points[pointCount - 1] = from;
                 lRender.SetPositions(points.ToArray());
                 lRender.GetComponent<LineRenderer>().material = m_Line;
-                lRender.transform.Find("HintBoxParent").gameObject.SetActive(true);
                 sm.MStatus = MeasureStatus.Complete;
             }
         }

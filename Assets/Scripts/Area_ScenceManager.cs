@@ -74,7 +74,7 @@ public class Area_ScenceManager : MonoBehaviour {
     }
 
     string DistanceToString(float len) {
-        displayLength = len >= 1.0f ? len.ToString("0.00") + "米" : Mathf.Round(len * 100) + "厘米";
+        displayLength = len >= 1.0f ? len.ToString("0.00") + "m" : Mathf.Round(len * 100) + "cm";
         return displayLength;
     }
 
