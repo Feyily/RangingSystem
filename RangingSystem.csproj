@@ -111,11 +111,12 @@
     <Compile Include="Assets\Scripts\Angle_Measure\Angle_ScenceManager.cs" />
     <Compile Include="Assets\Scripts\Angle_Measure\Angle_SquareMove.cs" />
     <Compile Include="Assets\Scripts\Angle_Measure\Angle_TracingLine.cs" />
-    <Compile Include="Assets\Scripts\Area_CenterDot.cs" />
-    <Compile Include="Assets\Scripts\Area_FindingPlanes.cs" />
-    <Compile Include="Assets\Scripts\Area_ScenceManager.cs" />
-    <Compile Include="Assets\Scripts\Area_SquareMove.cs" />
-    <Compile Include="Assets\Scripts\Area_TracingLine.cs" />
+    <Compile Include="Assets\Scripts\Area_Measuring\Area_CenterDot.cs" />
+    <Compile Include="Assets\Scripts\Area_Measuring\Area_FindingPlanes.cs" />
+    <Compile Include="Assets\Scripts\Area_Measuring\Area_ScenceManager.cs" />
+    <Compile Include="Assets\Scripts\Area_Measuring\Area_SquareMove.cs" />
+    <Compile Include="Assets\Scripts\Area_Measuring\Area_TracingLine.cs" />
+    <Compile Include="Assets\Scripts\ChangeScence.cs" />
     <Compile Include="Assets\Scripts\Distance_Measure\Distance_CenterDot.cs" />
     <Compile Include="Assets\Scripts\Distance_Measure\Distance_FindingPlanes.cs" />
     <Compile Include="Assets\Scripts\Distance_Measure\Distance_ResultText.cs" />

@@ -6,5 +6,5 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scence/DistanceMeasure.unity
-    guid: c5eb319dc8aae498699cb93fe95ae8c9
+    path: Assets/Scence/AreaMeasure.unity
+    guid: e42580738de3a4760891360f9a637dfb
