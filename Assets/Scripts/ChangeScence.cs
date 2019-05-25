@@ -27,19 +27,19 @@ public class ChangeScence : MonoBehaviour {
             _btn.GetComponent<Button>().interactable = false;
     }
 
-    void ChangeToLengthMeasure() { 
-    
+    public void ChangeToLengthMeasure() {
+        SceneManager.LoadScene(0);
     }
-    void ChangeToAngleMeasure()
+    public void ChangeToAngleMeasure()
     {
-
+        SceneManager.LoadScene(1);
     }
-    void ChangeToDistanceMeasure()
+    public void ChangeToDistanceMeasure()
     {
-
+        SceneManager.LoadScene(2);
     }
-    void ChangeToAreaMeasure()
+    public void ChangeToAreaMeasure()
     {
-
+        SceneManager.LoadScene(3);
     }
 }

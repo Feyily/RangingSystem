@@ -18,6 +18,8 @@ public class Length_ScenceManager : MonoBehaviour {
     [HideInInspector]
     public string displayDistance;
 
+    public Text test;
+
     private MeasureStatus mStatus;
     private UnityARSessionNativeInterface m_session;
 
@@ -68,6 +70,7 @@ public class Length_ScenceManager : MonoBehaviour {
         MStatus = MeasureStatus.Initializing;
         m_session = UnityARSessionNativeInterface.GetARSessionNativeInterface();
     }
+
 
     void TransAnimation(bool isFlash) {
         hintTextAniController.SetBool("isFlash", isFlash);
